@@ -59,26 +59,46 @@
 			// you may also add code outside of the function (e.g., global variables)
 			function myGradientInteraction(){
 				var tool = new paper.Tool();
-
+        var point;
+        var x1,x2,y1,y2;
+        var sam=document.getElementById("myCanvas");
 				tool.onMouseDown = function (event) {
-
+               point = event.point;
+              x1 = point.x;
+              y1 = point.y;
 				}
 
 				tool.onMouseUp = function (event) {
-					
+          			point = event.point;
+              x2 = point.x;
+              y2 = point.y;
+          var ctx=sam.getContext("2d");
+          var grd=ctx.createLinearGradient(x1,y1,x2,y2);
+          grd.addColorStop(0,cp.history[cp.history.length - 2]);
+          grd.addColorStop(1,cp.history[cp.history.length - 1]);
+          ctx.fillStyle=grd;
+          ctx.fillRect(x1,y1,x2,y2);
 				}
 			}
 
 			// your custom interaction goes here!
 			// you may replace everything
 			function myCustomInteraction() {
-				var tool = new paper.Tool();
+        
+       //   window.onload = function() {}
+          
 
+ 				var tool = new paper.Tool();
+        
 				tool.onMouseDown = function (event) {
-				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
-				    if (hit) {
-				        hit.item.fillColor = cp.history[cp.history.length - 1];
-				    }
+          var c=document.getElementById("myCanvas");
+          var ctx=c.getContext("2d");
+          ctx.fillStyle="#FF0000";
+          ctx.fillRect(50,40,150,200);
+// 				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+// 				    if (hit) {
+// 				        hit.item.fillColor = cp.history[cp.history.length - 1];
+// 				    }
 				}
 			}
 
