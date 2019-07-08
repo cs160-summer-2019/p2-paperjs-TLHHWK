@@ -40,7 +40,7 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
-
+      
 			// coloring page
 			var mandala = {
 				item: null,
@@ -54,15 +54,31 @@
 				options: [],
 				$container: $('#color-palette')
 			}
+   // var canvas=document.getElementById('myCanvas');
 
 			// your rectangle gradient interaction goes in this function
 			// you may also add code outside of the function (e.g., global variables)
 			function myGradientInteraction(){
+           
 				var tool = new paper.Tool();
         var point;
         var x1,x2,y1,y2;
         var hwk=document.getElementById("myCanvas");
+        var index=1
+        tool.onMouseMove = function(event)
+        {
+          if(index==1)
+            {
+            var c=document.getElementById("myCanvas");
+          var ctx=c.getContext("2d");
+          ctx.fillStyle="#FF0000";
+          ctx.fillRect(250,250,300,200);
+            index++
+            }
+          else{}
+        }
 				tool.onMouseDown = function (event) {
+               
                point = event.point;
               x1 = point.x;
               y1 = point.y;
@@ -77,7 +93,7 @@
           grd.addColorStop(0,cp.history[cp.history.length - 2]);
           grd.addColorStop(1,cp.history[cp.history.length - 1]);
           ctx.fillStyle=grd;
-          ctx.fillRect(x1,y1,x2-x1,y2-y1);
+          ctx.fillRect(250,250,300,200);
 				}
 			}
 
