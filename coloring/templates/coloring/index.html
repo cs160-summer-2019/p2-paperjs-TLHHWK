@@ -61,7 +61,7 @@
 				var tool = new paper.Tool();
         var point;
         var x1,x2,y1,y2;
-        var sam=document.getElementById("myCanvas");
+        var hwk=document.getElementById("myCanvas");
 				tool.onMouseDown = function (event) {
                point = event.point;
               x1 = point.x;
@@ -72,12 +72,12 @@
           			point = event.point;
               x2 = point.x;
               y2 = point.y;
-          var ctx=sam.getContext("2d");
+          var ctx=hwk.getContext("2d");
           var grd=ctx.createLinearGradient(x1,y1,x2,y2);
           grd.addColorStop(0,cp.history[cp.history.length - 2]);
           grd.addColorStop(1,cp.history[cp.history.length - 1]);
           ctx.fillStyle=grd;
-          ctx.fillRect(x1,y1,x2,y2);
+          ctx.fillRect(x1,y1,x2-x1,y2-y1);
 				}
 			}
 
