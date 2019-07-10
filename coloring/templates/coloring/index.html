@@ -10,13 +10,60 @@
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
 
 	<style type="text/css">
+
+/*     button */
+    
+.container {
+	position: absolute;
+/* 	top: 0; */
+	left: 0; 
+ 	right: 0; 
+	bottom: 40px;
+	height: 50px;
+	width: 200px;
+	margin: auto;
+}
+*[data-animation="ripple"] {
+	height: 100%;
+	width: 100%;
+	display: block;
+	outline: none;
+	padding: 20px;
+	color: #fff;
+	text-transform: uppercase;
+	background: linear-gradient(135deg, #e570e7 0%,#79f1fc 100%);
+	box-sizing: border-box;
+	text-align: center;
+	line-height: 14px;
+	font-family: roboto, helvetica;
+	font-weight: 200;
+	letter-spacing: 1px;
+	text-decoration: none;
+	box-shadow: 0 5px 3px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+  /*border-radius: 50px;*/
+	-webkit-tap-highlight-color: transparent;
+	border-radius: 5px;
+}
+
+*[data-animation="ripple"]:focus {
+	outline: none;
+}
+
+*[data-animation="ripple"]::selection {
+	background: transparent;
+	pointer-events: none;
+}
+
+    /*     button */
 		#color-palette {
 			width: 300px;
 			background-color: #f1f1f1;
 			display: flex;
 			flex-wrap: wrap;
 			position: absolute;
-			top: 0;
+			left:0;
+       Top:0;
 		}
 
 		.swatch {
@@ -40,8 +87,9 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
-      
+      //定义canvas
 			// coloring page
+      
 			var mandala = {
 				item: null,
 				lastClicked: null,
@@ -100,28 +148,73 @@
 			// your custom interaction goes here!
 			// you may replace everything
 			function myCustomInteraction() {
-        
        //   window.onload = function() {}
-          
-
  				var tool = new paper.Tool();
         
 				tool.onMouseDown = function (event) {
-          var c=document.getElementById("myCanvas");
-          var ctx=c.getContext("2d");
-          ctx.fillStyle="#FF0000";
-          ctx.fillRect(50,40,150,200);
-// 				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
-// 				    if (hit) {
-// 				        hit.item.fillColor = cp.history[cp.history.length - 1];
-// 				    }
+				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+				    if (hit) {
+//                 var colorH = hit.item.style.fillColor；
+//                 if (colorH.indexOf(1) != -1)
+              //  {
+             // alert(cp.history[cp.history.length - 1])
+              var rgbString = cp.history[cp.history.length - 1]; // get this in whatever way.
+              var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+              var rgbString1 = cp.history[cp.history.length - 2]; // get this in whatever way.
+              var parts1 = rgbString1.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+              // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+              delete (parts[0]);
+              delete (parts1[0]);
+              for (var i = 1; i <= 3; ++i) {
+              parts[i] = parseInt(parts[i]);
+              if (parts[i].length == 1) parts[i] = '0' + parts[i];
+              }
+              for (var i = 1; i <= 3; ++i) {
+              parts1[i] = parseInt(parts1[i]);
+              if (parts1[i].length == 1) parts1[i] = '0' + parts1[i];
+              }
+              //var hexString = parts.join(''); // "0070ff"
+              // var hexString1 = parts1.join(''); // "0070ff"
+             // alert(cp.history[cp.history.length - 1]+cp.history[cp.history.length - 2])
+             
+              var firstcolor = parseInt((parts[1]+parts1[1])/2);              
+              var secondcolor =parseInt((parts[2]+parts1[2])/2); 
+              var thirdcolor = parseInt((parts[3]+parts1[3])/2);
+              //var finalColor = "rgb("+firstcolor.toString()+" "+secondcolor.toString()+" "+thirdcolor.toString+")" 
+              var finalColor = "#"+firstcolor.toString(16)+secondcolor.toString(16)+thirdcolor.toString(16) 
+              alert(finalColor)
+              //alert((cp.history[cp.history.length - 1] +cp.history[cp.history.length - 2])/2)
+             // hit.item.fillColor = cp.history[cp.history.length - 1];
+              hit.item.fillColor = finalColor
+                 // 	hit.item.fillColor = (cp.history[cp.history.length - 1] +cp.history[cp.history.length - 2])/2;
+                  //  alert("yes");
+               // }
+               //hit.item.fillColor = "#FF00FF"
+//                 else
+//                 {
+//                   var originalColor = hit.item.style.fillColor;
+//                   alert(originalColor);
+                 // hit.item.fillColor =  (originalColor+cp.history[cp.history.length - 1])/2
+                  //alert(hit.item.style.fillColor);
+               // }
+               //alert(hit.item.style.fillColor);
+				    }
 				}
+         tool.onMouseDrag = function (event) {
+//           var hit = mandala.item.hitTest(event.point, { tolerance: 5, fill: true });
+//            //容错率，填色
+// 				    if (hit) {
+// 				        hit.item.fillColor = {
+//                   hue: event.count*1.5,
+//                   saturation: 1,
+//                   brightness: 1
+//               };
+// 				    }
 			}
-
-
+			}
 			// create a color palette with the given colors
+      
 			function createColorPalette(colors){
-
 				// create a swatch for each color
 				for (var i = colors.length - 1; i >= 0; i--) {
 					var $swatch = $("<div>").css("background-color", colors[i])
@@ -149,8 +242,8 @@
 			function init(custom){
 				paper.setup(canvas);
 				getColorsCreatePalette();
-
 				paper.project.importSVG(mandala.filePath, function(item) { 
+          //导入bg img
 					mandala.item = item._children["design-freepik"];
 				    paper.project.insertLayer(0,mandala.item);
 
@@ -162,11 +255,11 @@
 					
 				}); 
 			}
-
 			// To see your myGradientInteraction version visit: 
 			// http://<your url>:8000/coloring/?type=gradient
 			// To see your myCustomInteraction version visit: 
 			// http://<your url>:8000/coloring/
+      //用来定位地址的部分
 			var url = window.location.href;
 			if (url.indexOf("gradient") > -1) {
 				init(false);
@@ -180,5 +273,9 @@
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
 	<div id="color-palette"></div>
+  <div class="container">
+	<a data-animation="ripple">Click <span style="font-weight: bold;">Me</span></a>
+    <h1 style  = "font-weight: bold ;"> Ashley Park and WenKe Huang</h1> 
+</div>
 </body>
 </html>
