@@ -10,7 +10,23 @@
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
 
 	<style type="text/css">
-
+     .wrap{
+        width:40px;
+        height:60px;
+        position:relative;
+    }  
+    .btn1{
+        display:block;
+        width:140px;
+        height:40px;
+        line-height:40px;
+        text-align:center;
+        background:#ff0099;
+        color:#fff;
+        position:absolute;
+        left:100px;
+        bottom:0px;
+    }
 /*     button */
     
 .container {
@@ -56,14 +72,15 @@
 }
 
     /*     button */
+    
 		#color-palette {
 			width: 300px;
 			background-color: #f1f1f1;
 			display: flex;
 			flex-wrap: wrap;
 			position: absolute;
-			left:0;
-       Top:0;
+			left:30px;
+       Top:30px;
 		}
 
 		.swatch {
@@ -154,10 +171,7 @@
 				tool.onMouseDown = function (event) {
 				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
 				    if (hit) {
-//                 var colorH = hit.item.style.fillColor；
-//                 if (colorH.indexOf(1) != -1)
-              //  {
-             // alert(cp.history[cp.history.length - 1])
+              if(modelindex%3 ==0){
               var rgbString = cp.history[cp.history.length - 1]; // get this in whatever way.
               var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
               var rgbString1 = cp.history[cp.history.length - 2]; // get this in whatever way.
@@ -172,44 +186,31 @@
               for (var i = 1; i <= 3; ++i) {
               parts1[i] = parseInt(parts1[i]);
               if (parts1[i].length == 1) parts1[i] = '0' + parts1[i];
-              }
-              //var hexString = parts.join(''); // "0070ff"
-              // var hexString1 = parts1.join(''); // "0070ff"
-             // alert(cp.history[cp.history.length - 1]+cp.history[cp.history.length - 2])
-             
+              }    
               var firstcolor = parseInt((parts[1]+parts1[1])/2);              
               var secondcolor =parseInt((parts[2]+parts1[2])/2); 
               var thirdcolor = parseInt((parts[3]+parts1[3])/2);
-              //var finalColor = "rgb("+firstcolor.toString()+" "+secondcolor.toString()+" "+thirdcolor.toString+")" 
               var finalColor = "#"+firstcolor.toString(16)+secondcolor.toString(16)+thirdcolor.toString(16) 
-              alert(finalColor)
-              //alert((cp.history[cp.history.length - 1] +cp.history[cp.history.length - 2])/2)
-             // hit.item.fillColor = cp.history[cp.history.length - 1];
-              hit.item.fillColor = finalColor
-                 // 	hit.item.fillColor = (cp.history[cp.history.length - 1] +cp.history[cp.history.length - 2])/2;
-                  //  alert("yes");
-               // }
-               //hit.item.fillColor = "#FF00FF"
-//                 else
-//                 {
-//                   var originalColor = hit.item.style.fillColor;
-//                   alert(originalColor);
-                 // hit.item.fillColor =  (originalColor+cp.history[cp.history.length - 1])/2
-                  //alert(hit.item.style.fillColor);
-               // }
-               //alert(hit.item.style.fillColor);
+              hit.item.fillColor = finalColor}
+              else if(modelindex%3 ==1)
+              {
+                 hit.item.fillColor = cp.history[cp.history.length - 1];
+              }
+              
 				    }
 				}
          tool.onMouseDrag = function (event) {
-//           var hit = mandala.item.hitTest(event.point, { tolerance: 5, fill: true });
-//            //容错率，填色
-// 				    if (hit) {
-// 				        hit.item.fillColor = {
-//                   hue: event.count*1.5,
-//                   saturation: 1,
-//                   brightness: 1
-//               };
-// 				    }
+           if(modelindex %3 ==2){
+          var hit = mandala.item.hitTest(event.point, { tolerance: 5, fill: true });
+           //容错率，填色
+				    if (hit) {
+				        hit.item.fillColor = {
+                  hue: event.count*1.5,
+                  saturation: 1,
+                  brightness: 1
+              };
+				    }
+           }
 			}
 			}
 			// create a color palette with the given colors
@@ -268,14 +269,46 @@
 			}
 		}
 	</script>
+  <script>
+function button_onclick(){
+//这里写你要执行的语句
+ // mandala.filePath = 'triangles.svg'
+  //location.reload();
+  modelindex++;
+  if(modelindex%3==0)
+    {
+      document.getElementById("modelname").value= "Mixed Model";
+    }
+    else if(modelindex% 3 ==1)
+    {
+      document.getElementById("modelname").value= "Normal Model";
+      
+    }
+    else 
+      {
+        document.getElementById("modelname").value= "Drag Model";
+      }
+}
+    function button_Restart_onclick(){
+//这里写你要执行的语句
+ // mandala.filePath = 'triangles.svg'
+  location.reload();
+
+}
+  var modelindex=1;
+</script>
 </head>
 <body>	
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
 	<div id="color-palette"></div>
-  <div class="container">
-	<a data-animation="ripple">Click <span style="font-weight: bold;">Me</span></a>
-    <h1 style  = "font-weight: bold ;"> Ashley Park and WenKe Huang</h1> 
-</div>
+  
+  <div class="container"  onclick="javascript:button_Restart_onclick();" >
+	<a data-animation="ripple">Paint <span style="font-weight: bold;">Again</span></a>
+  </div>
+<div class="wrap">
+      <input id="modelname" type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
+    </div>
+  <div style  = "font-weight: bold;float: right;margin-right = 20px;" > <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
 </body>
 </html>
