@@ -22,10 +22,23 @@
         height:60px;
         line-height:40px;
         text-align:center;
-        background:#ff0099;
+        background:#ffccff;
         color:#fff;
         position:absolute;
         left:100px;
+        bottom:0px;
+    }
+    .btn2{
+        font-size:16px;
+        display:block;
+        width:150px;
+        height:60px;
+        line-height:40px;
+        text-align:center;
+        background:#ffccff;
+        color:#fff;
+        position:absolute;
+        right: 100px;
         bottom:0px;
     }
 /*     button */
@@ -121,7 +134,6 @@
 				options: [],
 				$container: $('#color-palette')
 			}
-   // var canvas=document.getElementById('myCanvas');
 
 			// your rectangle gradient interaction goes in this function
 			// you may also add code outside of the function (e.g., global variables)
@@ -208,10 +220,13 @@
            //容错率，填色
 				    if (hit) {
               var num = Math.random();
-              if(num==0){num=0.5;}
+              if(num<0.5)
+              {
+                num = num+0.5;
+              }
               hit.item.opacity= num;
 				        hit.item.fillColor = {
-                  hue: event.count*1.5,
+                  hue: event.count*1.2,
                   saturation: 1,
                   brightness: 1,
                   
@@ -296,13 +311,24 @@ function button_onclick(){
     function button_Restart_onclick(){
   location.reload();
 }
+        function button_Save_onclick(){
+//  location.reload();
+             var canvas = document.getElementById('myCanvas');
+          var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    var link = document.getElementById('link');
+      link.setAttribute('download', 'my.png');
+      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+      link.click();
+        //    var w=window. open('about:blank', 'image from canvas') ;
+         //   w.document.write("<img src=' "+image+"' alt='from canvas'/>") ;
+}
   var modelindex=1;
 </script>
 </head>
 <body >	
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
-
+<a id="link"></a>
   	<div id="color-palette"></div>
   
   <div class="container"  onclick="javascript:button_Restart_onclick();"style ="bottom :0px;" >
@@ -310,9 +336,11 @@ function button_onclick(){
   </div>
     <div >
       <input id="modelname" type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
+       <input  type="button"  value="Save"   onclick="javascript:button_Save_onclick();" class="btn2">
+      
     </div>
   <div style  = "font-weight: bold;float: right;margin-right = 20px; bottom = 0px" > <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
-  <div topmargin="0" oncontextmenu="return false" ondragstart="return false" onselectstart ="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()" >
+  <div >
   <iframe src="https://www.jsdaima.com/Uploads/js/201907/1562420990/index.html" frameborder="0" scrolling="no" frameborder="0"  marginheight="0" marginwidth="0" style="width:100%;height:100%;float:right"></iframe>
   </div>  
    </body>
