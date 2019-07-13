@@ -8,22 +8,18 @@
 
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
-  <style type="text/css"> 
- *{
-    margin: 0px;
-    padding: 0px; 
-}
-  </style> 
 	<style type="text/css">
+    
      .wrap{
         width:40px;
         height:60px;
         position:relative;
     }  
     .btn1{
+        font-size:16px;
         display:block;
-        width:140px;
-        height:40px;
+        width:150px;
+        height:60px;
         line-height:40px;
         text-align:center;
         background:#ff0099;
@@ -45,6 +41,7 @@
 	margin: auto;
 }
 *[data-animation="ripple"] {
+  bottom:10px;
 	height: 100% ;
 	width: 100%;
 	display: block;
@@ -302,7 +299,7 @@ function button_onclick(){
   var modelindex=1;
 </script>
 </head>
-<body>	
+<body >	
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
 
@@ -315,6 +312,8 @@ function button_onclick(){
       <input id="modelname" type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
     </div>
   <div style  = "font-weight: bold;float: right;margin-right = 20px; bottom = 0px" > <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
-  <iframe src="https://www.jsdaima.com/Uploads/js/201907/1562420990/index.html" frameborder="0" width="99.99%" height="80%"></iframe>
-  </body>
+  <div topmargin="0" oncontextmenu="return false" ondragstart="return false" onselectstart ="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()" >
+  <iframe src="https://www.jsdaima.com/Uploads/js/201907/1562420990/index.html" frameborder="0" scrolling="no" frameborder="0"  marginheight="0" marginwidth="0" style="width:100%;height:100%;float:right"></iframe>
+  </div>  
+   </body>
 </html>
