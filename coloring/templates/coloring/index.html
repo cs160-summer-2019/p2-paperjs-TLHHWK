@@ -8,7 +8,12 @@
 
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
-
+  <style type="text/css"> 
+ *{
+    margin: 0px;
+    padding: 0px; 
+}
+  </style> 
 	<style type="text/css">
      .wrap{
         width:40px;
@@ -40,7 +45,7 @@
 	margin: auto;
 }
 *[data-animation="ripple"] {
-	height: 100%;
+	height: 100% ;
 	width: 100%;
 	display: block;
 	outline: none;
@@ -194,6 +199,7 @@
               hit.item.fillColor = finalColor}
               else if(modelindex%3 ==1)
               {
+                  
                  hit.item.fillColor = cp.history[cp.history.length - 1];
               }
               
@@ -204,10 +210,14 @@
           var hit = mandala.item.hitTest(event.point, { tolerance: 5, fill: true });
            //容错率，填色
 				    if (hit) {
+              var num = Math.random();
+              if(num==0){num=0.5;}
+              hit.item.opacity= num;
 				        hit.item.fillColor = {
                   hue: event.count*1.5,
                   saturation: 1,
-                  brightness: 1
+                  brightness: 1,
+                  
               };
 				    }
            }
@@ -271,9 +281,6 @@
 	</script>
   <script>
 function button_onclick(){
-//这里写你要执行的语句
- // mandala.filePath = 'triangles.svg'
-  //location.reload();
   modelindex++;
   if(modelindex%3==0)
     {
@@ -290,10 +297,7 @@ function button_onclick(){
       }
 }
     function button_Restart_onclick(){
-//这里写你要执行的语句
- // mandala.filePath = 'triangles.svg'
   location.reload();
-
 }
   var modelindex=1;
 </script>
@@ -301,14 +305,16 @@ function button_onclick(){
 <body>	
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
-	<div id="color-palette"></div>
+
+  	<div id="color-palette"></div>
   
-  <div class="container"  onclick="javascript:button_Restart_onclick();" >
-	<a data-animation="ripple">Paint <span style="font-weight: bold;">Again</span></a>
+  <div class="container"  onclick="javascript:button_Restart_onclick();"style ="bottom :0px;" >
+	<a data-animation="ripple" typle ="float: ">Paint <span style="font-weight: bold;">Again</span></a>
   </div>
-<div class="wrap">
+    <div >
       <input id="modelname" type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
     </div>
-  <div style  = "font-weight: bold;float: right;margin-right = 20px;" > <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
-</body>
+  <div style  = "font-weight: bold;float: right;margin-right = 20px; bottom = 0px" > <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
+  <iframe src="https://www.jsdaima.com/Uploads/js/201907/1562420990/index.html" frameborder="0" width="99.99%" height="80%"></iframe>
+  </body>
 </html>
