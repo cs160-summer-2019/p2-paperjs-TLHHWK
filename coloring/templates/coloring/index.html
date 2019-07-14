@@ -25,13 +25,13 @@
         background:#ffccff;
         color:#fff;
         position:absolute;
-        left:100px;
-        bottom:0px;
+        right:100px;
+        bottom:500px;
     }
     .btn2{
         font-size:16px;
         display:block;
-        width:150px;
+        width:300px;
         height:60px;
         line-height:40px;
         text-align:center;
@@ -39,22 +39,36 @@
         color:#fff;
         position:absolute;
         right: 100px;
-        bottom:0px;
+        bottom:200px;
+    }
+      .Signature{
+        font-size:16px;
+        display:block;
+        width:300px;
+        height:60px;
+        line-height:40px;
+        text-align:center;
+        background:#000000;
+        color:#ffffff;
+        position:absolute;
+        right: 100px;
+        bottom:100px;
     }
 /*     button */
     
 .container {
 	position: absolute;
 /* 	top: 0; */
-	left: 0; 
- 	right: 0; 
-	bottom: 40px;
+	top: 0; 
+ 	bottom: 0;
+  right :100px;
 	height: 50px;
 	width: 200px;
 	margin: auto;
 }
 *[data-animation="ripple"] {
-  bottom:10px;
+  right:100px;
+  bottom:300px;
 	height: 100% ;
 	width: 100%;
 	display: block;
@@ -94,7 +108,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			position: absolute;
-			left:30px;
+			right:30px;
        Top:30px;
 		}
 
@@ -119,6 +133,8 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
+      
+			var colorcanvas = document.getElementById('colorcanvas');
       //定义canvas
 			// coloring page
       
@@ -181,12 +197,13 @@
 			function myCustomInteraction() {
        //   window.onload = function() {}
  				var tool = new paper.Tool();
-        var context = canvas.getContext('2d');
+        var context = colorCanvas.getContext('2d');
         var radius = 70;
         var startx = 0;
         var starty = 0;
         var isPainting = false;
-
+        var newPainting = 1;
+        
 				tool.onMouseDown = function (event) {
 				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
 				    if (hit) {
@@ -239,10 +256,7 @@
             var deltax = startx - point.x;
             var deltay = starty - point.y;
              radius = Math.sqrt((deltax*deltax)+(deltay*deltay));
-              if(radius>5)
-              {
-                radius = 5;
-              }
+      
               context.beginPath();
          context.arc(startx,starty,radius,0,2*Math.PI,false);
          context.fillStyle = cp.history[cp.history.length-1];
@@ -364,9 +378,26 @@ function button_onclick(){
 </script>
 </head>
 <body >	
-	<canvas id="myCanvas" width="750px" height="750px"></canvas>
+    <canvas id="colorCanvas" width="750px" height="750px" style = "z-index:1; position:absolute"></canvas>
+	<canvas id="myCanvas" width="750px" height="750px" style = "z-index:2; position:absolute"></canvas>
 <a id="link"></a>
-  	<div id="color-palette"></div>
+  	<div id="color-palette" style = 'z-index:3;position:absolute'></div>
+  
+  <div class="container"  onclick="javascript:button_Restart_onclick();"style ="bottom :0px;" >
+	<a data-animation="ripple" typle ="float: ">Paint <span style="font-weight: bold;">Again</span></a>
+  </div>
+    <div >
+      <input id="modelname" style='z-index:3;position:absolute' type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
+       <input  type="button"  value="Save"   onclick="javascript:button_Save_onclick();" class="btn2">
+      <p class = "Signature">Made by Ashley Park & WenKe Huang</p>
+    </div>
+
+<!--   <div>
+  <canvas id="colorCanvas" width="750px" height="750px" style = "z-index:1; position:absolute"></canvas>
+	<canvas id="myCanvas" width="750px" height="750px" style = "z-index:2; position:absolute"></canvas>
+  </div>
+    <a id="link"></a>
+  	<div id="color-palette" style = 'z-index:3;position:absolute'></div>
   <div class="container"  onclick="javascript:button_Restart_onclick();"style ="bottom :0px;" >
 	<a data-animation="ripple" typle ="float: ">Paint <span style="font-weight: bold;">Again</span></a>
   </div>
@@ -374,9 +405,12 @@ function button_onclick(){
       <input id="modelname" type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
        <input  type="button"  value="Save"   onclick="javascript:button_Save_onclick();" class="btn2">    
     </div>
-  <div style  = "font-weight: bold;float: right;margin-right = 20px; bottom = 0px" > <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
+  
+  
+<div style  = "font-weight: bold;float: right;margin-right = 20px; bottom = 0px"  style = "z-index:1; position:absolute"> <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
+  
   <div >
-  <iframe src="https://www.jsdaima.com/Uploads/js/201907/1562420990/index.html" frameborder="0" scrolling="no" frameborder="0"  marginheight="0" marginwidth="0" style="width:100%;height:100%;float:right"></iframe>
-  </div>  
+  <iframe src="https://www.jsdaima.com/Uploads/js/201907/1562420990/index.html" frameborder="0" scrolling="no" frameborder="0"  marginheight="0" marginwidth="0" style="width:100%;height:100%;float:right" style = "z-index:1; position:absolute"></iframe>
+  </div>   -->
    </body>
 </html>
