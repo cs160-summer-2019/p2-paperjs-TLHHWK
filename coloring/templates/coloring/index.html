@@ -1,10 +1,13 @@
+    
 {% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  	<title>P3 Coloring</title>
+  	<title>Coloring Book</title>
 
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
@@ -15,112 +18,88 @@
         height:60px;
         position:relative;
     }  
-    .btn1{
+    .pourButton{
         font-size:16px;
+			  font-family: 'Raleway', sans-serif;
         display:block;
         width:150px;
-        height:60px;
+        height:40px;
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
         line-height:40px;
         text-align:center;
-        background:#ffccff;
+        background:#458AD0;
         color:#fff;
         position:absolute;
-        right:100px;
-        bottom:500px;
+        right:180px;
+        top:350px;
     }
-    .btn2{
+    .fillButton{
         font-size:16px;
+			  font-family: 'Raleway', sans-serif;
         display:block;
-        width:300px;
-        height:60px;
+        width:150px;
+        height:40px;
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
         line-height:40px;
         text-align:center;
-        background:#ffccff;
+        background:#B0B0B0;
         color:#fff;
         position:absolute;
-        right: 100px;
-        bottom:200px;
+        right: 30px;
+        top:350px;
     }
-      .Signature{
+		
+		    .restartButton{
         font-size:16px;
+			  font-family: 'Raleway', sans-serif;
         display:block;
-        width:300px;
-        height:60px;
+        width:150px;
+        height:40px;
+				border-radius: 10px;
         line-height:40px;
         text-align:center;
-        background:#000000;
-        color:#ffffff;
+        background:#B0B0B0;
+        color:#fff;
         position:absolute;
-        right: 100px;
-        bottom:100px;
+        right: 30px;
+        bottom:0px;
     }
-/*     button */
-    
-.container {
+
+		.tutorial {
 	position: absolute;
 /* 	top: 0; */
-	top: 0; 
- 	bottom: 0;
-  right :100px;
+ 	right: 30px; 
+	top: 390px;
 	height: 50px;
-	width: 200px;
+	width: 280px;
 	margin: auto;
+	background:#D3E9FF;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
-*[data-animation="ripple"] {
-  right:100px;
-  bottom:300px;
-	height: 100% ;
-	width: 100%;
-	display: block;
-	outline: none;
-	padding: 20px;
-	color: #fff;
-	text-transform: uppercase;
-	background: linear-gradient(135deg, #e570e7 0%,#79f1fc 100%);
-	box-sizing: border-box;
-	text-align: center;
-	line-height: 14px;
-	font-family: roboto, helvetica;
-	font-weight: 200;
-	letter-spacing: 1px;
-	text-decoration: none;
-	box-shadow: 0 5px 3px rgba(0, 0, 0, 0.3);
-	cursor: pointer;
-  /*border-radius: 50px;*/
-	-webkit-tap-highlight-color: transparent;
-	border-radius: 5px;
-}
-
-*[data-animation="ripple"]:focus {
-	outline: none;
-}
-
-*[data-animation="ripple"]::selection {
-	background: transparent;
-	pointer-events: none;
-}
-
-    /*     button */
-    
+		 
 		#color-palette {
 			width: 300px;
+			border-radius: 10px;
 			background-color: #f1f1f1;
 			display: flex;
 			flex-wrap: wrap;
 			position: absolute;
 			right:30px;
-       Top:30px;
+       Top:100px;
 		}
-
+		
+	
 		.swatch {
-			width: 24px;
-			height: 24px;
-			-moz-border-radius: 12px;
-			-webkit-border-radius: 12px;
-			border-radius: 12px;
-			margin: 3px;
+			width: 50px;
+			height: 50px;
+			-moz-border-radius: 20px;
+			-webkit-border-radius: 20px;
+			border-radius: 30px;
+			margin: 5px;
 		}
-
 		#myCanvas {
 			padding-left: 0;
 		    padding-right: 0;
@@ -133,8 +112,6 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
-      
-			var colorcanvas = document.getElementById('colorcanvas');
       //定义canvas
 			// coloring page
       
@@ -143,148 +120,120 @@
 				lastClicked: null,
 				filePath: '/static/coloring/images/mandala-freepik.svg'
 			};	
-
 			// color palette
 			var cp = {
 				history: ["#000000"], // black selected by default
 				options: [],
 				$container: $('#color-palette')
 			}
-
 			// your rectangle gradient interaction goes in this function
 			// you may also add code outside of the function (e.g., global variables)
 			function myGradientInteraction(){
            
-// 				var tool = new paper.Tool();
-//         var point;
-//         var x1,x2,y1,y2;
-//         var hwk=document.getElementById("myCanvas");
-//         var index=1
-//         tool.onMouseMove = function(event)
-//         {
-//           if(index==1)
-//             {
-//             var c=document.getElementById("myCanvas");
-//           var ctx=c.getContext("2d");
-//           ctx.fillStyle="#FF0000";
-//           ctx.fillRect(250,250,300,200);
-//             index++
-//             }
-//           else{}
-//         }
-// 				tool.onMouseDown = function (event) {
+				var tool = new paper.Tool();
+        var point;
+        var x1,x2,y1,y2;
+        var hwk=document.getElementById("myCanvas");
+        var index=1
+        tool.onMouseMove = function(event)
+        {
+          if(index==1)
+            {
+            var c=document.getElementById("myCanvas");
+          var ctx=c.getContext("2d");
+          ctx.fillStyle="#FF0000";
+          ctx.fillRect(250,250,300,200);
+            index++
+            }
+          else{}
+        }
+				tool.onMouseDown = function (event) {
                
-//                point = event.point;
-//               x1 = point.x;
-//               y1 = point.y;
-// 				}
-
-// 				tool.onMouseUp = function (event) {
-//           			point = event.point;
-//               x2 = point.x;
-//               y2 = point.y;
-//           var ctx=hwk.getContext("2d");
-//           var grd=ctx.createLinearGradient(x1,y1,x2,y2);
-//           grd.addColorStop(0,cp.history[cp.history.length - 2]);
-//           grd.addColorStop(1,cp.history[cp.history.length - 1]);
-//           ctx.fillStyle=grd;
-//           ctx.fillRect(250,250,300,200);
-// 				}
+               point = event.point;
+              x1 = point.x;
+              y1 = point.y;
+				}
+				tool.onMouseUp = function (event) {
+          			point = event.point;
+              x2 = point.x;
+              y2 = point.y;
+          var ctx=hwk.getContext("2d");
+          var grd=ctx.createLinearGradient(x1,y1,x2,y2);
+          grd.addColorStop(0,cp.history[cp.history.length - 2]);
+          grd.addColorStop(1,cp.history[cp.history.length - 1]);
+          ctx.fillStyle=grd;
+          ctx.fillRect(250,250,300,200);
+				}
 			}
-
 			// your custom interaction goes here!
 			// you may replace everything
+      
+      
 			function myCustomInteraction() {
-       //   window.onload = function() {}
- 				var tool = new paper.Tool();
+        var tool = new paper.Tool();
         var context = colorCanvas.getContext('2d');
         var radius = 70;
         var startx = 0;
         var starty = 0;
         var isPainting = false;
-        var newPainting = 1;
-        
-				tool.onMouseDown = function (event) {
-				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
-				    if (hit) {
-              if(modelindex%4 ==0){
-              var rgbString = cp.history[cp.history.length - 1]; // get this in whatever way.
-              var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-              var rgbString1 = cp.history[cp.history.length - 2]; // get this in whatever way.
-              var parts1 = rgbString1.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-              // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
-              delete (parts[0]);
-              delete (parts1[0]);
-              for (var i = 1; i <= 3; ++i) {
-              parts[i] = parseInt(parts[i]);
-              if (parts[i].length == 1) parts[i] = '0' + parts[i];
-              }
-              for (var i = 1; i <= 3; ++i) {
-              parts1[i] = parseInt(parts1[i]);
-              if (parts1[i].length == 1) parts1[i] = '0' + parts1[i];
-              }    
-              var firstcolor = parseInt((parts[1]+parts1[1])/2);              
-              var secondcolor =parseInt((parts[2]+parts1[2])/2); 
-              var thirdcolor = parseInt((parts[3]+parts1[3])/2);
-              var finalColor = "#"+firstcolor.toString(16)+secondcolor.toString(16)+thirdcolor.toString(16) 
-              hit.item.fillColor = finalColor}
-              else if(modelindex%4 ==1)
-              {
-                 hit.item.fillColor = cp.history[cp.history.length - 1];
-              }
-              else if(modelindex%4 ==3)
-              {
-                  point = event.point;
-                  startx = point.x;
-                  starty = point.y;
-                  isPainting = true;
-              }
-              
-				    }
-				}
-        tool.onMouseMove = function(event){
-          
-       }
-        tool.onMouseUp = function(event){
+				var newPainting = 1;
+			//makes the mandala items transparent
+			tool.onMouseMove = function(event){
+				 if (newPainting == 1){
+				 mandala.item.fillColor='rgb(0,0,0,0.01)'
+					 newPainting = 2;
+				 }
+			 }
+			
+       tool.onMouseDown = function (event) {
+				 if(pour){
+         point = event.point;
+         startx = point.x;
+         starty = point.y;
+         isPainting = true;
+				 }
+				 else if(fill){
+					 var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+					 if(hit){
+						 hit.item.fillColor = cp.history[cp.history.length - 1];
+					 }
+				 }
+				}       
+       tool.onMouseUp = function(event){
          isPainting = false;
-       }
-         tool.onMouseDrag = function (event) {
-           if(modelindex%4 ==3){
-            
-            point = event.point;
-            if (isPainting){ 
-            var deltax = startx - point.x;
-            var deltay = starty - point.y;
-             radius = Math.sqrt((deltax*deltax)+(deltay*deltay));
-      
-              context.beginPath();
+       }		 
+        tool.onMouseDrag = function (event) {
+				if(pour){
+    point = event.point;
+         if (!isPainting) return;
+         var deltax = startx - point.x;
+         var deltay = starty - point.y;
+         radius = Math.sqrt((deltax*deltax)+(deltay*deltay));
+         context.beginPath();
          context.arc(startx,starty,radius,0,2*Math.PI,false);
          context.fillStyle = cp.history[cp.history.length-1];
          context.fill();
          context.lineWidth=1;
          context.strokeStyle = 'rgba(255,255,255,0.2)';
-         context.stroke();
-      }
-          }
-           if(modelindex %4 ==2){
-          var hit = mandala.item.hitTest(event.point, { tolerance: 5, fill: true });
+         context.stroke();}
+          if(fill){
+           var hit = mandala.item.hitTest(event.point, { tolerance: 5, fill: true });
            //容错率，填色
-				    if (hit) {
+        if (hit) {
               var num = Math.random();
               if(num<0.5)
               {
                 num = num+0.5;
               }
               hit.item.opacity= num;
-				        hit.item.fillColor = {
+            hit.item.fillColor = {
                   hue: event.count*1.2,
                   saturation: 1,
                   brightness: 1,
                   
               };
-				    }
-           }
-			}
+        }}
+			} 
 			}
 			// create a color palette with the given colors
       
@@ -300,7 +249,6 @@
 					cp.$container.append($swatch);
 				}
 			}
-
 			// loads a set of colors from a json to create a color palette
 			function getColorsCreatePalette(){
 				cp.$container.html(" ");
@@ -312,15 +260,14 @@
 					createColorPalette(cp.options);
 				});
 			}
-
 			function init(custom){
 				paper.setup(canvas);
 				getColorsCreatePalette();
 				paper.project.importSVG(mandala.filePath, function(item) { 
           //导入bg img
 					mandala.item = item._children["design-freepik"];
-				    paper.project.insertLayer(0,mandala.item);
-
+						paper.project.insertLayer(0);
+				    paper.project.insertLayer(1,mandala.item);
 				    if (custom) {
 				    	myCustomInteraction();	
 				    } else {
@@ -344,73 +291,71 @@
 	</script>
   <script>
 function button_onclick(){
-  modelindex++;
-  if(modelindex%4==0)
-    {
-      document.getElementById("modelname").value= "Mixed Model";
-    }
-    else if(modelindex% 4 ==1)
-    {
-      document.getElementById("modelname").value= "Normal Model";
-      
-    }
-    else if(modelindex% 4 ==2)
-      {
-        document.getElementById("modelname").value= "Drag Model";
-      }
-   else if(modelindex% 4 ==3)
-      {
-        document.getElementById("modelname").value= "Circle Model";
-      }
+	document.getElementById("fillButton")
 }
+		function button_clickpour(){
+			if(!pour){
+				pour=true;
+				fill = false;
+				document.getElementById('pourButton').style.backgroundColor = "#B0B0B0";
+				document.getElementById('fillButton').style.backgroundColor = "#458AD0";
+				var helpText = document.getElementById('help')
+				if(helpText.textContent==="Click on a color. Click and drag on the canvas to 'pour' out some paint!"){
+					helpText.textContent="Click on a color and then on a bounded area to fill it in!";
+				}
+				else{ helpText.textContent="Click on a color. Click and drag on the canvas to 'pour' out some paint!";}
+			}
+		}
+		
+		function button_clickfill(){
+			if(!fill){
+				fill=true;
+				pour=false;
+				document.getElementById('pourButton').style.backgroundColor = "#458AD0";
+				document.getElementById('fillButton').style.backgroundColor = "#B0B0B0";
+				var helpText = document.getElementById('help')
+								if(helpText.textContent==="Click on a color and then on a bounded area to fill it in!"){
+					helpText.textContent="Click on a color. Click and drag on the canvas to 'pour' out some paint!";
+				}
+				else{ helpText.textContent="Click on a color and then on a bounded area to fill it in!";}
+			}
+		}
+		
+		
     function button_Restart_onclick(){
   location.reload();
 }
-        function button_Save_onclick(){
-             var canvas = document.getElementById('myCanvas');
-          var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    var link = document.getElementById('link');
-      link.setAttribute('download', 'my.png');
-      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-      link.click();
-}
+
   var modelindex=1;
+	var pour = false;
+	var fill = true;
 </script>
 </head>
 <body >	
-    <canvas id="colorCanvas" width="750px" height="750px" style = "z-index:1; position:absolute"></canvas>
-	<canvas id="myCanvas" width="750px" height="750px" style = "z-index:2; position:absolute"></canvas>
-<a id="link"></a>
-  	<div id="color-palette" style = 'z-index:3;position:absolute'></div>
-  
-  <div class="container"  onclick="javascript:button_Restart_onclick();"style ="bottom :0px;" >
-	<a data-animation="ripple" typle ="float: ">Paint <span style="font-weight: bold;">Again</span></a>
-  </div>
-    <div >
-      <input id="modelname" style='z-index:3;position:absolute' type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
-       <input  type="button"  value="Save"   onclick="javascript:button_Save_onclick();" class="btn2">
-      <p class = "Signature">Made by Ashley Park & WenKe Huang</p>
-    </div>
-
-<!--   <div>
   <canvas id="colorCanvas" width="750px" height="750px" style = "z-index:1; position:absolute"></canvas>
 	<canvas id="myCanvas" width="750px" height="750px" style = "z-index:2; position:absolute"></canvas>
-  </div>
-    <a id="link"></a>
+<a id="link"></a>
+	<p style='font-family: Roboto Slab, serif;color:#767879; font-size:40px;text-align:right; padding:0px 30px 5px 0px'>
+		Let's Paint!
+	</p>
   	<div id="color-palette" style = 'z-index:3;position:absolute'></div>
-  <div class="container"  onclick="javascript:button_Restart_onclick();"style ="bottom :0px;" >
-	<a data-animation="ripple" typle ="float: ">Paint <span style="font-weight: bold;">Again</span></a>
-  </div>
+	</div>
+	</div>
+
     <div >
-      <input id="modelname" type="button"  value="Normal Model"   onclick="javascript:button_onclick();" class="btn1">
-       <input  type="button"  value="Save"   onclick="javascript:button_Save_onclick();" class="btn2">    
+      <input id="pourButton" style='z-index:3;position:absolute' type="button" value="Color Fill"   onclick="javascript:button_clickfill();" class="pourButton">
+			      <input id="fillButton" style='z-index:3;' type="button" value="Color Pour"   onclick="javascript:button_clickpour();" class="fillButton">
     </div>
-  
-  
-<div style  = "font-weight: bold;float: right;margin-right = 20px; bottom = 0px"  style = "z-index:1; position:absolute"> <font size="5"> Made By Ashley Park & WenKe Huang </font></div>
-  
-  <div >
-  <iframe src="https://www.jsdaima.com/Uploads/js/201907/1562420990/index.html" frameborder="0" scrolling="no" frameborder="0"  marginheight="0" marginwidth="0" style="width:100%;height:100%;float:right" style = "z-index:1; position:absolute"></iframe>
-  </div>   -->
+
+<div id = 'help' class='tutorial' style='font-family: Raleway, sans serif; color:#767879; font-size: 16px; padding: 10px'>
+
+	 Click on a color and then on a bounded area to fill it in!
+
+</div>
+<div>
+	<input id="restartButton" style='z-index:3;position:absolute' type="button" value="Start Over"   onclick="javascript:button_Restart_onclick();" class="restartButton">
+</div>
+
    </body>
 </html>
+
