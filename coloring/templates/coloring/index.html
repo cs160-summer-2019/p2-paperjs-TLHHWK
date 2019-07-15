@@ -72,7 +72,7 @@
 /* 	top: 0; */
  	right: 30px; 
 	top: 390px;
-	height: 50px;
+	height: 100px;
 	width: 280px;
 	margin: auto;
 	background:#D3E9FF;
@@ -112,6 +112,7 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
+      
       //定义canvas
 			// coloring page
       
@@ -314,10 +315,10 @@ function button_onclick(){
 				document.getElementById('pourButton').style.backgroundColor = "#458AD0";
 				document.getElementById('fillButton').style.backgroundColor = "#B0B0B0";
 				var helpText = document.getElementById('help')
-								if(helpText.textContent==="Click on a color and then on a bounded area to fill it in!"){
+								if(helpText.textContent==="Click on a color and then a bounded area to fill it in! Drag to fill in more spaces"){
 					helpText.textContent="Click on a color. Click and drag on the canvas to 'pour' out some paint!";
 				}
-				else{ helpText.textContent="Click on a color and then on a bounded area to fill it in!";}
+				else{ helpText.textContent="Click on a color and then a bounded area to fill it in! Drag to fill in more spaces";}
 			}
 		}
 		
@@ -349,7 +350,7 @@ function button_onclick(){
 
 <div id = 'help' class='tutorial' style='font-family: Raleway, sans serif; color:#767879; font-size: 16px; padding: 10px'>
 
-	 Click on a color and then on a bounded area to fill it in!
+	 Click on a color and then a bounded area to fill it in! Drag to fill in more spaces
 
 </div>
 <div>
